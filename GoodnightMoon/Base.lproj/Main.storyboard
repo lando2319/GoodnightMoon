@@ -71,6 +71,7 @@
                         </connections>
                     </view>
                     <connections>
+                        <outlet property="imageCollectionView" destination="Vq1-13-oxb" id="5qU-jw-tcS"/>
                         <outlet property="shadeView" destination="lAD-wQ-q8H" id="cdm-8y-krS"/>
                     </connections>
                 </viewController>
