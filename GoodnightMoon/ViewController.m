@@ -11,6 +11,8 @@
 
 @interface ViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 @property NSMutableArray *moonImages;
+@property NSMutableArray *sunImages;
+@property NSMutableArray *currentImages;
 @property (strong, nonatomic) IBOutlet UIView *shadeView;
 @property UICollisionBehavior *collisionBehavior;
 @property UIDynamicItemBehavior *dynamicItemBehavior;
@@ -31,6 +33,16 @@
     [self.moonImages addObject:[UIImage imageNamed:@"moon_4"]];
     [self.moonImages addObject:[UIImage imageNamed:@"moon_5"]];
     [self.moonImages addObject:[UIImage imageNamed:@"moon_6"]];
+
+    self.sunImages = [NSMutableArray array];
+    [self.sunImages addObject:[UIImage imageNamed:@"sun_1"]];
+    [self.sunImages addObject:[UIImage imageNamed:@"sun_2"]];
+    [self.sunImages addObject:[UIImage imageNamed:@"sun_3"]];
+    [self.sunImages addObject:[UIImage imageNamed:@"sun_4"]];
+    [self.sunImages addObject:[UIImage imageNamed:@"sun_5"]];
+    [self.sunImages addObject:[UIImage imageNamed:@"sun_6"]];
+
+    self.currentImages = self.sunImages;
 }
 
 - (IBAction)handlePan:(UIPanGestureRecognizer *)gesture
@@ -72,14 +84,14 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.moonImages.count;
+    return self.sunImages.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
      CollectionViewImageCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
 
-    cell.imageView.image = [self.moonImages objectAtIndex:indexPath.row];
+    cell.imageView.image = [self.sunImages objectAtIndex:indexPath.row];
     return cell;
 }
 
