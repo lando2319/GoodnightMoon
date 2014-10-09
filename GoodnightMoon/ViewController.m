@@ -12,6 +12,11 @@
 @interface ViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 @property NSMutableArray *moonImages;
 @property (strong, nonatomic) IBOutlet UIView *shadeView;
+@property UICollisionBehavior *collisionBehavior;
+@property UIDynamicItemBehavior *dynamicItemBehavior;
+@property UIGravityBehavior *gravityBehavior;
+@property UIPushBehavior *pushBehavior;
+@property UIDynamicAnimator *dynamicAnimator;
 @end
 
 @implementation ViewController
@@ -52,4 +57,25 @@
     cell.imageView.image = [self.moonImages objectAtIndex:indexPath.row];
     return cell;
 }
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    self.dynamicAnimator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
+    self.collisionBehavior = [[UICollisionBehavior alloc] initWithItems:[NSArray arrayWithObject:self.shadeView]];
+    self.gravityBehavior = [[UIGravityBehavior alloc] initWithItems:[NSArray arrayWithObject:self.shadeView]];
+    self.dynamicItemBehavior = [[UIDynamicItemBehavior alloc] initWithItems:[NSArray arrayWithObject:self.shadeView]];
+    self.pushBehavior = [[UIPushBehavior alloc] initWithItems:[NSArray arrayWithObject:self.shadeView] mode:UIPushBehaviorModeContinuous];
+
+    [self.collisionBehavior addBoundaryWithIdentifier:@"bottom"
+                                            fromPoint:CGPointMake(-10, self.view.frame.size.height)
+                                              toPoint:CGPointMake(self.view.frame.size.width - 20, self.view.frame.size.height)];
+    [self.gravityBehavior setGravityDirection:CGVectorMake(0, 0)];
+    [self.dynamicItemBehavior setElasticity:0.25];
+    [self.dynamicAnimator addBehavior:self.collisionBehavior];
+    [self.dynamicAnimator addBehavior:self.gravityBehavior];
+    [self.dynamicAnimator addBehavior:self.pushBehavior];
+    [self.dynamicAnimator addBehavior:self.dynamicItemBehavior];
+}
+
 @end
